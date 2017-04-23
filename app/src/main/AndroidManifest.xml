@@ -9,6 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:screenOrientation="landscape"
             android:name=".MainActivity"
             android:theme="@style/AppTheme.TransparentWindow">
             <intent-filter>
