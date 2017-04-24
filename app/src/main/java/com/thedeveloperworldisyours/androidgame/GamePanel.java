@@ -1,6 +1,8 @@
 package com.thedeveloperworldisyours.androidgame;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -12,6 +14,11 @@ import android.view.SurfaceView;
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread mMainThread;
+    private static final String TAG = "GamePanel";
+    public static final int WIDTH = 856;
+    public static final int HEIGHT = 480;
+    public static final int MOVESPEED = -5;
+    public Background mBackground;
 
     public GamePanel(Context context) {
         super(context);
@@ -25,6 +32,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        mBackground = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.grassbg1));
+        mBackground.setVector(-5);
+
         mMainThread.setmRunning(true);
         mMainThread.start();
     }
@@ -57,6 +67,22 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
+        mBackground.update();
+    }
 
+    @Override
+    public void draw(Canvas canvas) {
+
+        final float scaleFactorX = getWidth()/(WIDTH*1.f);
+        final float scaleFactorY = getHeight()/(HEIGHT*1.f);
+
+        if (canvas != null) {
+
+            final int savedStated = canvas.save();
+            canvas.scale(scaleFactorX, scaleFactorY);
+            mBackground.draw(canvas);
+
+            canvas.restoreToCount(savedStated);
+        }
     }
 }
