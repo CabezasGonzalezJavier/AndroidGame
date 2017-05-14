@@ -13,7 +13,7 @@ public class Player extends GameObject{
     private int score;
     private boolean up;
     private boolean playing;
-    //private Animation animation = new Animation();
+    private Animation animation = new Animation();
     private long startTime;
 
     public Player(Bitmap verticalSprites, int width, int height, int numFrames) {
@@ -28,8 +28,8 @@ public class Player extends GameObject{
             bitmaps[i] = Bitmap.createBitmap(verticalSprites, i*width, 0, width, height);
         }
 
-       // animation.setFrames(bitmaps);
-        //animation.setDelay(10);
+        animation.setFrames(bitmaps);
+        animation.setDelay(10);
         startTime = System.nanoTime();
     }
 
@@ -41,7 +41,7 @@ public class Player extends GameObject{
             score++;
             startTime = System.nanoTime();
         }
-       // animation.update();
+        animation.update();
 
         if(up){
             dy -=1;
@@ -56,9 +56,9 @@ public class Player extends GameObject{
     }
 
 
-   // public void draw(Canvas canvas) {
-     //   canvas.drawBitmap(animation.getImage(),x,y,null);
-    //}
+    public void draw(Canvas canvas) {
+        canvas.drawBitmap(animation.getImage(),x,y,null);
+    }
 
 
     public void setUp(boolean b){up = b;}
