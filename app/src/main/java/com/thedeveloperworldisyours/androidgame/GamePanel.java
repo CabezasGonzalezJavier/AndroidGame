@@ -7,6 +7,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.thedeveloperworldisyours.androidgame.object.Player;
+
 /**
  * Created by javiergonzalezcabezas on 8/4/17.
  */
@@ -19,6 +21,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static final int HEIGHT = 480;
     public static final int MOVESPEED = -5;
     public Background mBackground;
+    public Player mPlayer;
 
     public GamePanel(Context context) {
         super(context);
@@ -33,6 +36,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         mBackground = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.grassbg1));
+        mPlayer = new Player(BitmapFactory.decodeResource(getResources(), R.drawable.helicopter), 65, 25, 3);
+
         mBackground.setVector(-5);
 
         mMainThread.setmRunning(true);
@@ -63,11 +68,27 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return false;
+
+        if (event.getAction() == MotionEvent.ACTION_DOWN){
+            if (!mPlayer.getPlaying()) {
+                mPlayer.setPlaying(true);
+            } else {
+                mPlayer.setUp(true);
+            }
+        }
+
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            mPlayer.setUp(false);
+        }
+
+        return true;
     }
 
     public void update() {
-        mBackground.update();
+        if (mPlayer.getPlaying()) {
+            mBackground.update();
+            mPlayer.update();
+        }
     }
 
     @Override
@@ -81,6 +102,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             final int savedStated = canvas.save();
             canvas.scale(scaleFactorX, scaleFactorY);
             mBackground.draw(canvas);
+            mPlayer.draw(canvas);
 
             canvas.restoreToCount(savedStated);
         }
