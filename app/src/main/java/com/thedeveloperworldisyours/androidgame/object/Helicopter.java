@@ -9,14 +9,14 @@ import com.thedeveloperworldisyours.androidgame.GamePanel;
  * Created by javiergonzalezcabezas on 14/5/17.
  */
 
-public class Player extends GameObject{
+public class Helicopter extends GameObject{
     private int score;
     private boolean up;
     private boolean playing;
     private Animation animation = new Animation();
     private long startTime;
 
-    public Player(Bitmap verticalSprites, int width, int height, int numFrames) {
+    public Helicopter(Bitmap verticalSprites, int width, int height, int numFrames) {
 
         super(100, GamePanel.HEIGHT/2, width, height);
 
