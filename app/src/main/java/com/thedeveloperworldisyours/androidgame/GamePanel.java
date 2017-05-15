@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.thedeveloperworldisyours.androidgame.object.Player;
+import com.thedeveloperworldisyours.androidgame.object.Helicopter;
 
 /**
  * Created by javiergonzalezcabezas on 8/4/17.
@@ -21,7 +21,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static final int HEIGHT = 480;
     public static final int MOVESPEED = -5;
     public Background mBackground;
-    public Player mPlayer;
+    public Helicopter mHelicopter;
 
     public GamePanel(Context context) {
         super(context);
@@ -36,7 +36,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         mBackground = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.grassbg1));
-        mPlayer = new Player(BitmapFactory.decodeResource(getResources(), R.drawable.helicopter), 65, 25, 3);
+        mHelicopter = new Helicopter(BitmapFactory.decodeResource(getResources(), R.drawable.helicopter), 65, 25, 3);
 
         mBackground.setVector(-5);
 
@@ -70,24 +70,24 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN){
-            if (!mPlayer.getPlaying()) {
-                mPlayer.setPlaying(true);
+            if (!mHelicopter.getmPlaying()) {
+                mHelicopter.setmPlaying(true);
             } else {
-                mPlayer.setUp(true);
+                mHelicopter.setmUp(true);
             }
         }
 
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            mPlayer.setUp(false);
+            mHelicopter.setmUp(false);
         }
 
         return true;
     }
 
     public void update() {
-        if (mPlayer.getPlaying()) {
+        if (mHelicopter.getmPlaying()) {
             mBackground.update();
-            mPlayer.update();
+            mHelicopter.update();
         }
     }
 
@@ -102,7 +102,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             final int savedStated = canvas.save();
             canvas.scale(scaleFactorX, scaleFactorY);
             mBackground.draw(canvas);
-            mPlayer.draw(canvas);
+            mHelicopter.draw(canvas);
 
             canvas.restoreToCount(savedStated);
         }

@@ -7,38 +7,38 @@ import android.graphics.Rect;
  */
 
 public abstract class GameObject {
-    protected int x;
-    protected int y;
+    protected int ejeX;
+    protected int ejeY;
     protected int dy;
     protected int dx;
     protected int width;
     protected int height;
 
     GameObject(int x, int y, int w, int h){
-        this.x=x;
-        this.y=y;
+        this.ejeX =x;
+        this.ejeY =y;
         this.width=w;
         this.height=h;
     }
 
 
-    public void setX(int x) {
-        this.x = x;
+    public void setEjeX(int ejeX) {
+        this.ejeX = ejeX;
     }
 
 
-    public void setY(int y) {
-        this.y = y;
+    public void setEjeY(int ejeY) {
+        this.ejeY = ejeY;
     }
 
 
-    public int getX() {
-        return x;
+    public int getEjeX() {
+        return ejeX;
     }
 
 
-    public int getY() {
-        return y;
+    public int getEjeY() {
+        return ejeY;
     }
 
 
@@ -53,6 +53,6 @@ public abstract class GameObject {
 
 
     public Rect getRectangle() {
-        return new Rect(x, y, x+width, y+height);
+        return new Rect(ejeX, ejeY, ejeX +width, ejeY +height);
     }
 }

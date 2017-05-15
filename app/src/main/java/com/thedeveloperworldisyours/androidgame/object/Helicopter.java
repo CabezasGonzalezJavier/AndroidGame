@@ -11,10 +11,12 @@ import com.thedeveloperworldisyours.androidgame.GamePanel;
 
 public class Helicopter extends GameObject{
     private int score;
-    private boolean up;
-    private boolean playing;
+    private boolean mUp;
+    private boolean mPlaying;
     private Animation animation = new Animation();
     private long startTime;
+
+    private final static int MAXIMUN = 10;
 
     public Helicopter(Bitmap verticalSprites, int width, int height, int numFrames) {
 
@@ -43,28 +45,30 @@ public class Helicopter extends GameObject{
         }
         animation.update();
 
-        if(up){
+        if(mUp){
             dy -=1;
         } else{
             dy +=1;
         }
 
-        if(dy>14)dy = 14;
-        if(dy<-14)dy = -14;
+        if(dy>MAXIMUN)dy = MAXIMUN;
+        if(dy<-MAXIMUN)dy = -MAXIMUN;
 
-        y += dy;
+        ejeY += dy;
     }
 
 
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(animation.getImage(),x,y,null);
+        canvas.drawBitmap(animation.getImage(), ejeX, ejeY,null);
     }
 
 
-    public void setUp(boolean b){up = b;}
+    public void setmUp(boolean booleanUp){
+        mUp = booleanUp;}
     public void resetDY(){dy = 0;}
     public int getScore(){return score;}
     public void resetScore(){score = 0;}
-    public boolean getPlaying(){return playing;}
-    public void setPlaying(boolean b){playing = b;}
+    public boolean getmPlaying(){return mPlaying;}
+    public void setmPlaying(boolean playing){
+        this.mPlaying = playing;}
 }
