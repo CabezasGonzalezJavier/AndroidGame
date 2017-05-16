@@ -18,4 +18,16 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(mPanel);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPanel.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPanel.onPause();
+    }
 }

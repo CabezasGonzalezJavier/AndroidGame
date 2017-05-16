@@ -17,6 +17,7 @@ public class MainThread extends Thread {
     private GamePanel mGamePanel;
     private boolean mRunning;
     public static Canvas mCanvas;
+    public boolean suspended;
 
 
     public MainThread(SurfaceHolder surfaceHolder, GamePanel gamePanel) {
@@ -72,11 +73,28 @@ public class MainThread extends Thread {
                 totalTime = 0;
                 Log.i(TAG, "run: mAverageFPS = "+ mAverageFPS);
             }
+
+            synchronized(this) {
+                while(suspended) {
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
+    void onPause() {
+        suspended = true;
+    }
 
+    synchronized void onResume() {
+        suspended = false;
+        notify();
+    }
 
-    public void setmRunning(boolean myBoolean) {
+    public void setRunning(boolean myBoolean) {
         mRunning =myBoolean;
     }
 }

@@ -38,10 +38,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         mBackground = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.grassbg1));
         mHelicopter = new Helicopter(BitmapFactory.decodeResource(getResources(), R.drawable.helicopter), 65, 25, 3);
 
-        mBackground.setVector(-5);
+        mBackground.setVector(MOVESPEED);
 
-        mMainThread.setmRunning(true);
-        mMainThread.start();
     }
 
     @Override
@@ -55,7 +53,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         boolean retry = true;
         while (retry) {
             try {
-                mMainThread.setmRunning(retry);
+                mMainThread.setRunning(retry);
                 mMainThread.join();
 
             } catch (InterruptedException exception) {
@@ -69,7 +67,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        if (event.getAction() == MotionEvent.ACTION_DOWN){
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (!mHelicopter.getmPlaying()) {
                 mHelicopter.setmPlaying(true);
             } else {
@@ -94,8 +92,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
 
-        final float scaleFactorX = getWidth()/(WIDTH*1.f);
-        final float scaleFactorY = getHeight()/(HEIGHT*1.f);
+        final float scaleFactorX = getWidth() / (WIDTH * 1.f);
+        final float scaleFactorY = getHeight() / (HEIGHT * 1.f);
 
         if (canvas != null) {
 
@@ -106,5 +104,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             canvas.restoreToCount(savedStated);
         }
+    }
+
+    public void onResume() {
+
+        mMainThread.setRunning(true);
+        if (mMainThread.getState() == Thread.State.NEW) {
+            mMainThread.start();
+        } else {
+           mMainThread.onResume();
+
+        }
+    }
+
+    public void onPause() {
+        mMainThread.onPause();
+//        mMainThread.setRunning(false);
     }
 }
