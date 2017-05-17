@@ -57,7 +57,9 @@ public class Helicopter extends GameObject {
             dy = -MAXIMUM;
         }
 
-        ejeY += dy;
+        if (dy > 0 || dy < 145) {
+            ejeY += dy;
+        }
     }
 
 
